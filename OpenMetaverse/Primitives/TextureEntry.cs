@@ -397,7 +397,7 @@ namespace OpenMetaverse
                 {
                     byte o = m_material;
                     if ((m_attributes & TextureAttributes.Material) == 0)
-                        o = DefaultTexture.m_material;
+                        m_material = DefaultTexture.m_material;
 
                     byte tb = (m_material &= 0xE0);
                     tb |= (byte)value;
@@ -423,7 +423,7 @@ namespace OpenMetaverse
                 {
                     byte o = m_material;
                     if ((m_attributes & TextureAttributes.Material) == 0)
-                        o = DefaultTexture.m_material;
+                        m_material = DefaultTexture.m_material;
 
                     // Clear out the old shiny value
                     byte tb = (m_material &= 0x3F);
@@ -450,7 +450,7 @@ namespace OpenMetaverse
                 {
                     byte o = m_material;
                     if ((m_attributes & TextureAttributes.Material) == 0)
-                        o = DefaultTexture.m_material;
+                        m_material = DefaultTexture.m_material;
 
                     // Clear out the old fullbright value
                     byte tb = (m_material &= 0xDF);
@@ -480,7 +480,7 @@ namespace OpenMetaverse
                 {
                     byte o = m_media;
                     if ((m_attributes & TextureAttributes.Media) == 0)
-                        o = DefaultTexture.m_media;
+                        m_media = DefaultTexture.m_media;
 
                     // Clear out the old mediaflags value
                     byte tb = (byte)(m_media & 0xFE);
@@ -507,7 +507,7 @@ namespace OpenMetaverse
                 {
                     byte o = m_media;
                     if ((m_attributes & TextureAttributes.Media) == 0)
-                        o = DefaultTexture.m_media;
+                        m_media = DefaultTexture.m_media;
 
                     byte tb = (byte)(m_media & 0xF9);
                     tb |= (byte)value;
@@ -711,7 +711,7 @@ namespace OpenMetaverse
         /// of nine faces</remarks>
         public class TextureEntry
         {
-            public const int MAX_FACES = 32;
+            public const int MAX_FACES = 45;
             public static readonly UUID WHITE_TEXTURE = new UUID("5748decc-f629-461c-9a36-a35a221fe21f");
 
             /// <summary></summary>
@@ -1046,7 +1046,7 @@ namespace OpenMetaverse
             #endregion Rotation
 
             #region Material
-            DefaultTexture.m_material = data[i];
+                DefaultTexture.m_material = data[i];
                 i++;
 
                 while (ReadFaceBitfield(data, ref i, ref faceBits, ref bitfieldSize))
@@ -1157,7 +1157,7 @@ namespace OpenMetaverse
                     ms.Write(DefaultTexture.m_textureID.GetBytes(), 0, 16);
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if (FaceTextures[i] == null)
                         {
                             nulls |= cur;
@@ -1177,12 +1177,12 @@ namespace OpenMetaverse
                             continue;
 
                         UUID id = FaceTextures[i].TextureID;
-                        if (id == null || id == DefaultTexture.m_textureID)
+                        if (id == DefaultTexture.m_textureID)
                             continue;
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1217,7 +1217,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1230,7 +1230,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1255,7 +1255,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1268,7 +1268,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1293,7 +1293,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1306,7 +1306,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1332,7 +1332,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1345,7 +1345,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1370,7 +1370,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1383,7 +1383,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1408,7 +1408,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1421,7 +1421,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1445,7 +1445,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1458,7 +1458,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1482,7 +1482,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1495,7 +1495,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1520,7 +1520,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1533,7 +1533,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1557,7 +1557,7 @@ namespace OpenMetaverse
                     done = nulls;
                     for (int i = last; i >= 0; --i)
                     {
-                        cur = (ulong)(1 << i);
+                        cur = (1UL << i);
                         if ((done & cur) != 0)
                             continue;
 
@@ -1570,7 +1570,7 @@ namespace OpenMetaverse
 
                         for (int j = i - 1; j >= 0; --j)
                         {
-                            next = (ulong)(1 << j);
+                            next = (1UL << j);
                             if ((done & next) != 0)
                                 continue;
 
@@ -1584,6 +1584,226 @@ namespace OpenMetaverse
                             cur |= next;
                         }
                         WriteFaceBitfieldBytes(ms, cur);
+                        ms.Write(materialID.GetBytes(), 0, 16);
+                    }
+                    ms.WriteByte(0);
+                    #endregion MaterialID
+
+                    return ms.ToArray();
+                }
+            }
+
+
+            private static List<int> AllBakedIndexes = new List<int>() { 44, 43, 42, 41, 40, 20, 19, 11, 10, 9, 8 };
+            private static List<int> LegacyBakedIndexes = new List<int>() {20, 19, 11, 10, 9, 8 };
+
+            public byte[] GetBakesBytes(int maxfaces = MAX_FACES)
+            {
+                if (DefaultTexture == null)
+                    return Utils.EmptyBytes;
+
+                if(maxfaces > FaceTextures.Length)
+                    maxfaces = FaceTextures.Length;
+
+                List<int> bakedIndexes;
+                if(maxfaces > 21)
+                    bakedIndexes = AllBakedIndexes;
+                else
+                    bakedIndexes = LegacyBakedIndexes;
+
+                using (MemoryStream ms = new MemoryStream(256))
+                {
+                    #region Texture
+                    UUID defText = DefaultTexture.TextureID;
+                    ms.Write(defText.GetBytes(), 0, 16);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        UUID id = FaceTextures[i].TextureID;
+                        if (id == defText)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        ms.Write(id.GetBytes(), 0, 16);
+                    }
+                    ms.WriteByte(0);
+                    #endregion Texture
+
+                    #region Color
+                    // Serialize the color bytes inverted to optimize for zerocoding
+                    ms.Write(DefaultTexture.RGBA.GetBytes(true), 0, 4);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        Color4 c = FaceTextures[i].RGBA;
+                        if (c == DefaultTexture.RGBA)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        ms.Write(c.GetBytes(true), 0, 4);
+                    }
+                    ms.WriteByte(0);
+                    #endregion Color
+
+                    #region RepeatU
+                    float deff = DefaultTexture.RepeatU;
+                    Utils.FloatToBytes(ms, deff);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        float repeat = FaceTextures[i].RepeatU;
+                        if (repeat == deff)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        Utils.FloatToBytes(ms, repeat);
+                    }
+                    ms.WriteByte(0);
+                    #endregion RepeatU
+
+                    #region RepeatV
+                    deff = DefaultTexture.RepeatV;
+                    Utils.FloatToBytes(ms, deff);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        float repeat = FaceTextures[i].RepeatV;
+                        if (repeat == deff)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        Utils.FloatToBytes(ms, repeat);
+                    }
+                    ms.WriteByte(0);
+
+                    #endregion RepeatV
+
+                    #region OffsetU
+                    short def = DefaultTexture.m_offsetU;
+                    Utils.Int16ToBytes(ms, def);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        short offset = FaceTextures[i].m_offsetU;
+                        if (offset == def)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        Utils.Int16ToBytes(ms, offset);
+                    }
+                    ms.WriteByte(0);
+                    #endregion OffsetU
+
+                    #region OffsetV
+                    def = DefaultTexture.m_offsetV;
+                    Utils.Int16ToBytes(ms, def);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        short offset = FaceTextures[i].m_offsetV;
+                        if (offset == def)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        Utils.Int16ToBytes(ms, offset);
+                    }
+                    ms.WriteByte(0);
+                    #endregion OffsetV
+
+                    #region Rotation
+                    def = DefaultTexture.m_rotation;
+                    Utils.Int16ToBytes(ms, def);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        short rotation = FaceTextures[i].m_rotation;
+                        if (rotation == def)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        Utils.Int16ToBytes(ms, rotation);
+                    }
+                    ms.WriteByte(0);
+                    #endregion Rotation
+
+                    #region Material
+                    ms.WriteByte(DefaultTexture.m_material);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        byte material = FaceTextures[i].m_material;
+                        if (material == DefaultTexture.m_material)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        ms.WriteByte(material);
+                    }
+                    ms.WriteByte(0);
+                    #endregion Material
+
+                    #region Media
+                    ms.WriteByte(DefaultTexture.m_media);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        byte media = FaceTextures[i].m_media;
+                        if (media == DefaultTexture.m_media)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        ms.WriteByte(media);
+                    }
+                    ms.WriteByte(0);
+                    #endregion Media
+
+                    #region Glow
+                    byte defg = DefaultTexture.m_glow;
+                    ms.WriteByte(defg);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        byte glow = FaceTextures[i].m_glow;
+                        if (glow == defg)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
+                        ms.WriteByte(glow);
+                    }
+                    ms.WriteByte(0);
+                    #endregion Glow
+
+                    #region MaterialID
+                    ms.Write(DefaultTexture.m_materialID.GetBytes(), 0, 16);
+                    foreach (int i in bakedIndexes)
+                    {
+                        if (FaceTextures[i] == null)
+                            continue;
+
+                        UUID materialID = FaceTextures[i].m_materialID;
+                        if (materialID == null || materialID == DefaultTexture.m_materialID)
+                            continue;
+
+                        WriteFaceBitfieldBytes(ms, (1UL << i));
                         ms.Write(materialID.GetBytes(), 0, 16);
                     }
                     ms.WriteByte(0);
@@ -1665,6 +1885,25 @@ namespace OpenMetaverse
                         {
                             if (bitfield >= 0x10000000)
                             {
+                                if (bitfield >= 0x800000000)
+                                {
+                                    if (bitfield >= (1UL << 42))
+                                    {
+                                        if (bitfield >= (1UL << 49))
+                                        {
+                                            b = (byte)(bitfield >> 49);
+                                            b |= 0x80;
+                                            ms.WriteByte(b);
+                                        }
+                                        b = (byte)(bitfield >> 42);
+                                        b |= 0x80;
+                                        ms.WriteByte(b);
+                                    }
+
+                                    b = (byte)(bitfield >> 35);
+                                    b |= 0x80;
+                                    ms.WriteByte(b);
+                                }
                                 b = (byte)(bitfield >> 28);
                                 b |= 0x80;
                                 ms.WriteByte(b);
